@@ -1,4 +1,12 @@
+`stateless`: no guarda información sobre las operaciones, no las recuerda, no se ve afectado
+Podríamos llegar a la conclusión de que ellos son reutilizables; es decir, que no dependen de otros objetos para sobrevivir, sino que tienen sentido de existencia propio.
+
+`Stateful`: mi componente va a cambiar por cada vez que llame a algún método o algo por el estilo, se ve afectado su comportamiento
+
+
 ##EJ MODULO EXPORTADOR
+
+
 
 1. se reconoce la 1era clase: exportador
 2. se modela interfaz exportable
