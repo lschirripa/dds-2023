@@ -156,7 +156,9 @@ SOLUCION: Buscar abstracciones que nos permitan trabajar polimorficamente
 
 ## <u> DATA CLASS - ONLY ACCESORS: </u>
 
-Una clase que solo representa datos es reconocible porque solo presenta setters y getters
+Una clase que solo representa datos es reconocible porque solo presenta setters y getters.
+
+Separar una clase en DOS innecesariamente.
 
         Alumno
             - datos: DataAlumno
@@ -207,12 +209,142 @@ ejemplos:
 - V.O: Son `inmutables`. Los atributos NO pueden cambiar de valores. Si se necesita cambiar el valor de algun atributo, se DESECHA la instancia y se crea un VO nuevo.
 
 En JAVA, para darle INMUTABILIDAD a un objeto se usa la palabra 'final'
+<br>
+<br>
+<br>
+### <u><b> ENTIDAD O VALUE OBJECT? </b> </u>
+
+![image](assets/entidadOvalueobject.png)
+
+![image](assets/entidadOvalueobject2.png)
 
 
 
 <br>
 <br>
 <br>
+
+# MODELADO DE USUARIOS, ROLES Y PERMISOS PT.1
+
+## RESPONSABILIDADES DE CAPAS DE UN SISTEMA:
+
+Muchas veces el POO nos lleva a confundir asignacion de responsabilidades entre las distintas capas que puede tener un Sistema.
+
+EJEMPLO Q ESTA MAL: 
+METODO unirse_a_comunidad() ponerlo en una clase
+o
+METODO administrar_etc() en la clase admin.
+
+![image](assets/responsabilidadesCapas.png)
+
+- SERIA INCORRECTO PLANTEAR:
+    - una clase ALUMNO con un metodo 'verCalificaciones': Que haria ese metodo?
+    - una clase DOCENTE con un metodo 'administrarCalifiaciones', nuevamente, que haria ese metodo? 
+    NADA. PENSAMIENTO INCORRECTO
+
+    La discusion no pasa por entender de que solamente los docentes pueden administrar las notas, sino por la abstraccion de capas. Pasa por estar mezclando responsabilidades de distintas capas del sistema. ULTIMO CODE SMELL. Also, estaria creando una god class.
+
+<br>
+<br>
+
+- QUE ES LO CORRECTO?
+
+![image](assets/capas.png)
+
+- CAPA DE PRESENTACION: 
+    - Capa encargada de presentar datos al user, con la cual interactuara.
+    - No necesariamente es visual.
+    - La forma de presentacion de datos la podemos dividir de 2 formas:
+        - Presentacion de datos mediante interfaz grafica(desktop,web,movil)
+        - Presentacion mediante APIs(API REST)
+
+- CAPA DE DOMINIO/NEGOCIO:
+    - Es la capa encargada de modelar las reglas de negocio, las `ENTIDADES` del dominio. ES LA QUE ESTAMOS REALIZANDO EN EL TP AHORA. 
+    - Contiene la parte estructural. 
+
+- CAPA DE DATOS:
+    - Capa encargada de la manipulacion de la persistencia de datos del sistema.
+    - preguntas como donde obtengo a los alumnos del sistema? donde recupero los docentes del sistema? corresponden a esta capa.
+    - Si existe persistencia en una BD, esta capa se encargara de comunicar con ella.
+
+
+![image](assets/responsabilidadesCapas2.png)
+
+- como permitimos que un docente genere(instancie) una calificacion entonces? y si un admin de la plataforma o bedel tambien puede administrar las calificaciones?
+
+- Me interesa la entidad Administrador, bedel y docente? El DOCENTE si porque me interesas mas datos de el, las otras NO, solo tendran acceso al sistema y listo. Entonces si seria al pedo crear una clase BEDEL o ADMIN, solamente son ROLES.
+
+ENTONCES:
+
+![image](assets/responsabilidadesCapas3.png)
+![image](assets/responsabilidadesCapas4.png)
+![image](assets/responsabilidadesCapas5.png)
+
+No es la unica propuesta de disenio para los usuarios, roles y permisos
+
+- los permisos podrian estar modelados con enums, entendiendo que trae ciertas limitaciones...
+- ?<?>
+
+![image](assets/responsabilidadesCapas6.png)
+
+Para el BEDEL o el ADMINISTRADOR, NO VOY a crear una clase por ellos dos, porque simplemente son un ROL, que no van a tener comportamiento.
+
+en el tp: entidad miembro SI me interesa, entidad ADMIN de la plataforma NO interesa, solamente tiene un rol, asique no es una entidad.
+
+Donde podriamos instanciar nuestros objetos, donde los podriamos configurar o verificar las acciones? `CAPA DE CONTROLADORES`
+
+
+### <b> CAPA DE CONTROLADORES: </b>
+SON LOS UNICOS QUE DEBERIAN COMUNICARSE CON LAS DEMAS CAPAS. OSEA, YO NUNCA, desde la clase alumno, clase docente, acceder a la clase crearCalificacion, o alguna otra parecida.
+
+![image](assets/responsabilidadesCapas7.png)
+![image](assets/responsabilidadesCapas8.png)
+- DataCalificacion es un Value Object, usuario es el usuario que esta intentando crear la calificacion.
+
+![image](assets/responsabilidadesCapas9.png)
+
+Lo ideal es tener UN CONTROLADOR por cada clase o entidad. sino seria un controlador God class.
+
+<br>
+<br>
+
+# <b> BIBLIOTECA VS FRAMEWORK: </b>
+
+BIBLIOTECAS:
+- bibliotecas que contienen funcionalidades que el dev puede optar por usarlas o no. Uso una biblioteca que resuelve un problema. Se compila y carga todo el codigo de un tercero o no.
+
+- el flujo lo tengo yo, esto no pasa en los frameworks
+
+FRAMEWORKS:
+- me otorga funcionalidades, pero ya es una estructura, ya me da un marco de trabajo. Suelen ser ellos el flujo de ejecucion del programa e invertir el control.
+- el framework llama a nuestro codigo en cambio a la biblioteca nosotros la llamamos.
+- se dividen en:
+    - DOGMATICOS -estructura rigida y definida, con una "manera correcta".- (SpringBoot, Django, Laravel)
+    - NO DOGMATICOS -menos restrictivo, estructura mas flexible- (ExpressJS)
+
+![image](assets/bibliotecaVsFramework.png)
+
+# <b> INYECCION DE DEPENDENCIA: </b>
+
+![image](assets/inyeccion.png)
+ANALIZANDO LAS 3 POSIBLIDADES
+1. SINGLETON:
+![image](assets/inyeccion2.png)
+DETALLE: lo unico que le falta es que el constructor sea privado para que sea solo la misma clase la que lo puede instanciar
+
+2. SERVICE LOCATOR
+![image](assets/inyeccion3.png)
+
+3. INYECCION DE DEPENDENCIA
+No le pide a NADIE(a ninguna clase) el objeto. Me llega por alguien que no me importa quien.
+![image](assets/inyeccion5.png)
+
+RESUMEN DE DIFERENCIAS:
+![image](assets/inyeccion4.png)
+
+
+
+
 <br>
 <br>
 <br>
@@ -223,6 +355,13 @@ En JAVA, para darle INMUTABILIDAD a un objeto se usa la palabra 'final'
 # TP:
 
 - Si hicimos clase USUARIO, o MIEMBRO, es tendencia a ser clase DIOS. Estara fuertemente acoplada al resto de las clases.
+
+- EN CASOS DE USO NUNCA PONER LA PALABRA USUARIO, identificar ROLES mejor. Verbos en infinitivo.
+
+- en el tp: entidad miembro SI me interesa, entidad ADMIN de la plataforma NO interesa, solamente tiene un rol, asique no es una entidad.
+
+- Por ahora, los usuarios entonces ni se graficarian en el modelo, porque son ROLES hasta ahora, NO tienen ninguna relevancia en el dominio. SI tendra importancia en los CASOS DE USO y ahi se se va a graficar como interactua.
+
 
 <!-- to research:
 - polimorfismo -->
