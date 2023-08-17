@@ -17,4 +17,4 @@
 
 6. sin apuros: notificaciones cron -> patron command puede ayudar a inspirarse en el y tomar una idea.
 
-7. como no tenemos db podemos pensar en un RepositorioDeNotificaciones, Aunq no es necesario del todo meterlo. Si lo metemos, no pasar de capa de dominio a repository directamente, sino pasar por el controller.
+7. como no tenemos db podemos pensar z un RepositorioDeNotificaciones, Aunq no es necesario del todo meterlo. Si lo metemos, no pasar de capa de dominio a repository directamente, sino pasar por el controller.
