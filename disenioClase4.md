@@ -87,7 +87,7 @@ distinta.
     - EN EL EJEMPLO DE LA PPT Y EL EJERCICIO:
         - Las 3 clases que estan vacias: son las clases de 3ros que no conocemos, para eso estana arriba los 3 adapters que hacemos y nos hacemos cargo recien ahi
         - Arriba de nuestros 3 adapters va a estar nuestra clase `PDFAdapter`
-        - Siguiendo el adapter esta nuestra clase que aplica Strategy
+        - Siguiendo el adapter esta nuestra clase que aplica strategy.assets.Strategy
 
 
 >>>EJERCICIO CUIDANDONOS
