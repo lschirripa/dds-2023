@@ -12,7 +12,7 @@
 4. Para evaluar la calidad de un sistema es mejor medir y  analizar su disponibilidad que su performance:
 - Falso. Un sistema no es mejor ni otro por un atributo de calidad, sino que depende el contexto
 
-5. Se puede usar strategy en prolog? NO. solo existe en POO.
+5. Se puede usar behaviouralPatterns.strategy en prolog? NO. solo existe en POO.
 
 6. Cual no es una caracteristica de un buen disenio? la BAJA cohesion. - se necesita alta cohesion, bajo acoplamiento 
 
@@ -21,7 +21,7 @@
 8. si se sabe que el comportamiento de una clase depende de su estado, entonces se podria aplicar:
 - estado como enum (definitivamente no)
 - lista de estados con variables booleanas
-- Patron strategy
+- Patron behaviouralPatterns.strategy
 - Patron STATE -> V.
 
 9. El atributo testeabilidad, lo podemos encontrar dentro de:

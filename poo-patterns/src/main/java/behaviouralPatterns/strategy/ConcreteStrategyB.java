@@ -1,4 +1,4 @@
-package strategy.assets;
+package behaviouralPatterns.strategy;
 
 public class ConcreteStrategyB {
 

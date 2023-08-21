@@ -44,7 +44,7 @@ Podríamos llegar a la conclusión de que ellos son reutilizables; es decir, que
         - muchos ifs xd
 
     - BUEN DISENIO:
-        - separar en dos clases separadas los formatos PDF y EXCEL (strategy) 
+        - separar en dos clases separadas los formatos PDF y EXCEL (behaviouralPatterns.strategy) 
             - CLASE `ExportarAExcel`
             - CLASE `ExportarAPDF`
         - implementan de la interfaz EstrategiaDeExportacion
@@ -71,7 +71,7 @@ distinta.
     • Se requiere permitir configurar en momento de ejecución la forma en que un objeto realizará una
     acción.
 
-- DIFERENCIA con ejemplo en el patron strategy del pdf y el ejercicio: El contexto es stateful por atributo, mientras que el ejercicio se hizo stateless por parametro
+- DIFERENCIA con ejemplo en el patron behaviouralPatterns.strategy del pdf y el ejercicio: El contexto es stateful por atributo, mientras que el ejercicio se hizo stateless por parametro
 
 >>> ### PATRON ADAPTER:
 
@@ -87,7 +87,7 @@ distinta.
     - EN EL EJEMPLO DE LA PPT Y EL EJERCICIO:
         - Las 3 clases que estan vacias: son las clases de 3ros que no conocemos, para eso estana arriba los 3 adapters que hacemos y nos hacemos cargo recien ahi
         - Arriba de nuestros 3 adapters va a estar nuestra clase `PDFAdapter`
-        - Siguiendo el adapter esta nuestra clase que aplica strategy.assets.Strategy
+        - Siguiendo el adapter esta nuestra clase que aplica strategy.Strategy
 
 
 >>>EJERCICIO CUIDANDONOS
