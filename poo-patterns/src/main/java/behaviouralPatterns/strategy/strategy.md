@@ -52,5 +52,3 @@ Decorator te permite cambiar la piel de un objeto, mientras que strategy.Strateg
 Template Method se basa en la herencia: te permite alterar partes de un algoritmo extendiendo esas partes en subclases. strategy.Strategy se basa en la composición: puedes alterar partes del comportamiento del objeto suministrándole distintas estrategias que se correspondan con ese comportamiento. Template Method trabaja al nivel de la clase, por lo que es estático. behaviouralPatterns.strategy.assets.Strategy trabaja al nivel del objeto, permitiéndote cambiar los comportamientos durante el tiempo de ejecución.
 
 State puede considerarse una extensión de behaviouralPatterns.strategy.assets.Strategy. Ambos patrones se basan en la composición: cambian el comportamiento del contexto delegando parte del trabajo a objetos ayudantes. behaviouralPatterns.strategy.assets.Strategy hace que estos objetos sean completamente independientes y no se conozcan entre sí. Sin embargo, State no restringe las dependencias entre estados concretos, permitiéndoles alterar el estado del contexto a voluntad.
-
-Ejemplos de código
