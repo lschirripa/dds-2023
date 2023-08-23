@@ -56,9 +56,9 @@ El refactor busca:
 
 # CODE SMELLS:
 
-![image](assets/codesmell1.png)
-![image](assets/codesmell2.png)
-![image](assets/codesmell3.png)
+![image](assets/codeSmell1.png)
+![image](assets/codeSmell2.png)
+![image](assets/codeSmell3.png)
 
 
 - Hacer las cosas una sola vez
@@ -80,7 +80,7 @@ El viejo metodo largo, quedara como un metodo orquestador que llama a los demas 
 - Clases con demasiadas responsabilidades, que estan fuertemente acopladas a muchos otros objetos y que por consecuencia ante cualquier cambio se ven afectadas
 - NUNCA hacer una clase que se llame (mas bien represente al) SISTEMA xd
 - SOLUCIONES A GOD CLASS:
-    ![image](assets/Solucionesagodclass.png)
+    ![image](assets/solucionesAGodClass.png)
     1. Generar nuevas clases: Principio de responsabilidad unica (S de SOLID):
     2. Generar subclases: Principio de Liskov. Que no se intente cambiar el tipo generico (GODCLASS) que antes estaba usando. A cada clase hija la debo tratar como la mas general.
     3. Generar interfaces: Segregacion de interfaces
@@ -95,7 +95,7 @@ Si la god class es respponsable de una interfaz grafica, se debe comenzxar a pen
 - Si un objeto va a brindar un servicio a otro, lo mejor seria que la cantidad de parametros del metodo en cuestion no varie
 
 EJ:
-    ![image](assets/paramlargo1.png)
+    ![image](assets/paramLargo1.png)
 
 Ahora se creo un objeto de tipo BusquedaPelicula. Todos esos parametros pasaron a estar dentro de busqueda pelicula.
 
@@ -381,21 +381,21 @@ FRAMEWORKS:
 
 # <b> INYECCION DE DEPENDENCIA: </b>
 
-![image](assets/inyeccion.png)
+![image](assets/INYECCION.png)
 ANALIZANDO LAS 3 POSIBLIDADES
 1. SINGLETON:
-![image](assets/inyeccion2.png)
+![image](assets/INYECCION2.png)
 DETALLE: lo unico que le falta es que el constructor sea privado para que sea solo la misma clase la que lo puede instanciar
 
 2. SERVICE LOCATOR
-![image](assets/inyeccion3.png)
+![image](assets/INYECCION3.png)
 
 3. INYECCION DE DEPENDENCIA
 No le pide a NADIE(a ninguna clase) el objeto. Me llega por alguien que no me importa quien.
-![image](assets/inyeccion5.png)
+![image](assets/INYECCION5.png)
 
 RESUMEN DE DIFERENCIAS:
-![image](assets/inyeccion4.png)
+![image](assets/INYECCION4.png)
 
 
 
