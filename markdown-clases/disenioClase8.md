@@ -1,61 +1,85 @@
-EVALUO EN CUANTO DISPONIBILIDAD:
+# <b>ARQUITECTURA DE SOFTWARE:</b>
 
-- veo si por ejemplo el internet me limita en algun sentido de la disponibilidad. Porque por ejemplo si tengo dispositivos que dependen de internet para enviarme alarmas cuando pasa algo, si se me cae internet nunca me va a enviar los datos o alarmas
+## <b> MODELO EN CAPAS: </b>
 
-EVALUO PERFORMANCE, TIEMPO DE RTA:
-- MUCHISIMA latencia por internet, llegada de info al sv nube y eso
+- Se puede dividir el problema en varias capas
+- Se logra alta cohesion entre cada capa y se logra separar la responsabilidad
+- Las capas superiores usan servicios de las inferiores, pero no así de forma contraria o saltando niveles (no siempre se respeta este punto a rajatabla, se intenta)
 
+![image](assets/arq1.png)
 
-EVALUO EN CUANTO A SEGURIDAD:
+- la capa de servicios hace uso de otros aplicativos (en realidad interactuaria con la capa de presentacion logica)
 
-- si me hackean el sv de mi empresa de alarmas que todos los dispositivos se me comunican, me ganan el acceso a todos los dispositivos de todas las casas.
+### Ventajas:
+• Nos mantiene enfocados en el problema a resolver.
+• Podrias tranquilamente reemplazar una capa por otra que cumpla la misma funcion y el sistema deberia funcionar, o al menos no deberia costar tanto el cambio
+• Esconde el detalle de cómo se llevan a cabo los servicios que expone.
+• Puede ser reemplazada la implementación de los servicios siendo transparente para los consumidores.
+• Minimiza la dependencia entre componentes.
+• Facilita las pruebas.
 
+### Desventajas:
+• Los cambios pueden generar efecto cascada.
+• Demasiadas capas agregan complejidad y afectan negativamente al rendimiento.
 
-### PENSANDO DE OTRA MANERA =>
-
- ANALIZAR QUE PASARIA SI EN VEZ DE UN SERVIDOR EN LA NUBE YO TENDRIA UN SERVIDOR LOCAL:
-
--  siguiendo el ejemplo, en mi casa correria el server y conecto los dispositivos a mi RED LOCAL. entonces INTERNET ya no seria un problema y mejoraria mi DISPONIBILIDAD
-
-- AHORA cada hogar sera responsable de la carga de dispositivos que tendra cada hogar mismo. Ya no tengo un sv central donde tenga que aguantar toda la info de todos los dispositivos de todas las casas.
-
-- Que pasa si tengo que actualizar el sistema? mando un tecnico a cada casa? eso no pasaria si estuviese en la nube.
-Pensando como resolverlo para que sea mas barato, necesitaria tener un componente que vaya chequeando si hay actualizaciones o no (centro de actualizaciones, como tiene windows)
-
-
-
-## dos esquemas distintos pensando en los componentes:
-
-1_  desde los servidores voy a ir hasta a los sensores para ir a buscar el dato o alrevez? que es mejor?
-si desde el sv constantemente pregunto los datos no tiene sentido (while que nunca termina, eso es una ESPERA ACTIVA)
-
-2_ Si los sensores envian cada cierto tiempo los datos al sv. El sv no consume recursos ni cpu al pedo. MUCHO mas eficiente
-
-    Estos dos esquemas se llaman: 
-    1_ PULL BASED: Vamos a buscar el dato constantemente
-        - sv busca el dato constantemente
-    2_ PUSH BASED
-        - esperamos que el dato nos llegue y actuamos
-        - ejemplo con las notificaciones PUSH
-
-gralmente se hace un mix. Si por x motivo el user no recibio la notificacion, se hace un PULL BASED cada cierto tiempo por las dudas. O para chequear el estado de salud del sensor 
-
-Como consecuencia de tener algo PUSH BASED, NUUUUNCA podre tener por ejemplo un metodo que diga buscarDato() de parte del sv, eso seria recontra PULL
+## <b> CLIENTE-SERVIDOR </b>
 
 
-<br/>
-<br/>
 
-------------------------
+Participan 2 componentes:
+• Un servidor que provee uno o más servicios a través de una interfaz.
+
+• Un cliente que usa esos servicios como parte de su operación en el acceso al servidor.
 
 
-## PATRON COMMAND
+## Clasificacion:
 
-Se sugiere cuando:
+• Cliente Activo, Servidor Pasivo: el cliente es quien posee la mayor lógica de negocio. El servidor limita su
+funcionalidad a la persistencia. EJEMPLO: App desktop donde la logica completa este escrito en la app desktop. Pero si estoy trabajando colaborativamente con un grupo, tendre que tener algo de logica del lado del SV.    
 
-- se requiere configurar en momento de ejecucion una serie de acciones que debe realizar un objeto
+• Cliente Pasivo, Servidor Pasivo: ambos componentes poseen baja lógica de negocio o simplemente son considerados
+“componentes intermedios” de algo “más grande”. NO ES muy relevante estudiarlas, seria un balance entre los 2. 
 
-- se requiere configurar en momento de ejecucion una serie de acciones a realizar en un momento posterior al de coniguracoin, formando una cola
+LOS DOS MAS IMPORTANTES:
 
-- ...
+• Cliente Pasivo, Servidor Activo (“Cliente liviano”): el servidor posee la mayor lógica de negocio; mientras que el
+cliente se limita a presentar los datos. ESTO ES UNA WEB TRADICIONAL. El diagrama borroso de arriba se corresponde un poco mas a esto
 
+• Cliente Activo, Servidor Activo (“Cliente pesado”): la lógica de negocio está distribuida en ambos componentes. El
+cliente posee la lógica de presentación de los datos. Al tener mucha logica en JS CORRIENDO del lado del browser, ahi voy a tener un cliente mas pesado. Le estariamos sacando procesamiento al sv, solo el sv devuelve el dato puro y el front o browser se encarga de lo demas. La desventaja es el rendimiento afectado del usuario (segun el dispositivo que tenga)
+
+
+###Ventajas
+• Mantenibilidad: Cambios de funcionalidad Centralizados
+• Seguridad: Centralización de Control de Accesos a recursos
+
+###Desventajas
+• Eficiencia (tiempo de respuesta): El servidor puede ser un cuello de botella
+• Disponibilidad: Único punto de falla
+
+## MVC:
+
+Modelo-vista-controlador (MVC) es un patrón de arquitectura de software de INTERACCION que separa la arquitectura en
+tres componentes: el modelo, la vista y el controlador.
+
+![image](assets/arq2.png)
+
+- la lineal me solicita algo, la punteada me devulve
+
+
+- EN UNA MVC WEB (la que vamos a usar), nunca vamos a hacer que la vista interactue directamente con el modelo. En algunos otros MVC clasicos si interactua.
+
+![image](assets/arq3.png)
+
+
+<BR>
+<BR>
+<BR>
+<BR>
+
+
+
+
+
+## TP:
+- revisar el modelo en capas

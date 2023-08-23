@@ -1,85 +1,425 @@
-# <b>ARQUITECTURA DE SOFTWARE:</b>
+# PRINCIPIOS SOLID:
 
-## <b> MODELO EN CAPAS: </b>
+1. <b> SINGLE RESPONSABILITY PRINCIPLE </b>
+    - clases cohesivas, una unica responsabilidad
+    - evitar clase dios
+    - resp ecapsulada x la clase
 
-- Se puede dividir el problema en varias capas
-- Se logra alta cohesion entre cada capa y se logra separar la responsabilidad
-- Las capas superiores usan servicios de las inferiores, pero no así de forma contraria o saltando niveles (no siempre se respeta este punto a rajatabla, se intenta)
+2. <b>OPEN CLOSED PRINCIPLE: </b>
+    - entidades deben estar abiertas para expansion(extensibilidad, etc), cerradas para modificacion(si me viene un requerimiento nuevo NO)
+    - es la implementacion de herencias e interfaces para resolver el problema
+    - sugiere evitar switchs y propiciar polimorfismo entre objetos
 
-![image](assets/arq1.png)
+3. <b>LISKOV SUBSTITUTION PRINCIPLE: </b>
+    - dificil de cumplirlo
+    - Siempre intenta tipar con la clase o interfaz mas general que puedas
+    - Cada clase que hereda de otra puede usarse como su superclase sin necesidad de conocer las diferencias entre las clases derivadas. Lo mismo para interfaces.
+    - Se propicia el polimorfismo pero a veces no es indispensable, cuidado.
+    - Osea las clases hijas, no deberian tener mas metodos que los que tiene la superclase
+    - no hace falta forzarlo ni cumplirlo.
 
-- la capa de servicios hace uso de otros aplicativos (en realidad interactuaria con la capa de presentacion logica)
-
-### Ventajas:
-• Nos mantiene enfocados en el problema a resolver.
-• Podrias tranquilamente reemplazar una capa por otra que cumpla la misma funcion y el sistema deberia funcionar, o al menos no deberia costar tanto el cambio
-• Esconde el detalle de cómo se llevan a cabo los servicios que expone.
-• Puede ser reemplazada la implementación de los servicios siendo transparente para los consumidores.
-• Minimiza la dependencia entre componentes.
-• Facilita las pruebas.
-
-### Desventajas:
-• Los cambios pueden generar efecto cascada.
-• Demasiadas capas agregan complejidad y afectan negativamente al rendimiento.
-
-## <b> CLIENTE-SERVIDOR </b>
-
-
-
-Participan 2 componentes:
-• Un servidor que provee uno o más servicios a través de una interfaz.
-
-• Un cliente que usa esos servicios como parte de su operación en el acceso al servidor.
-
-
-## Clasificacion:
-
-• Cliente Activo, Servidor Pasivo: el cliente es quien posee la mayor lógica de negocio. El servidor limita su
-funcionalidad a la persistencia. EJEMPLO: App desktop donde la logica completa este escrito en la app desktop. Pero si estoy trabajando colaborativamente con un grupo, tendre que tener algo de logica del lado del SV.    
-
-• Cliente Pasivo, Servidor Pasivo: ambos componentes poseen baja lógica de negocio o simplemente son considerados
-“componentes intermedios” de algo “más grande”. NO ES muy relevante estudiarlas, seria un balance entre los 2. 
-
-LOS DOS MAS IMPORTANTES:
-
-• Cliente Pasivo, Servidor Activo (“Cliente liviano”): el servidor posee la mayor lógica de negocio; mientras que el
-cliente se limita a presentar los datos. ESTO ES UNA WEB TRADICIONAL. El diagrama borroso de arriba se corresponde un poco mas a esto
-
-• Cliente Activo, Servidor Activo (“Cliente pesado”): la lógica de negocio está distribuida en ambos componentes. El
-cliente posee la lógica de presentación de los datos. Al tener mucha logica en JS CORRIENDO del lado del browser, ahi voy a tener un cliente mas pesado. Le estariamos sacando procesamiento al sv, solo el sv devuelve el dato puro y el front o browser se encarga de lo demas. La desventaja es el rendimiento afectado del usuario (segun el dispositivo que tenga)
-
-
-###Ventajas
-• Mantenibilidad: Cambios de funcionalidad Centralizados
-• Seguridad: Centralización de Control de Accesos a recursos
-
-###Desventajas
-• Eficiencia (tiempo de respuesta): El servidor puede ser un cuello de botella
-• Disponibilidad: Único punto de falla
-
-## MVC:
-
-Modelo-vista-controlador (MVC) es un patrón de arquitectura de software de INTERACCION que separa la arquitectura en
-tres componentes: el modelo, la vista y el controlador.
-
-![image](assets/arq2.png)
-
-- la lineal me solicita algo, la punteada me devulve
-
-
-- EN UNA MVC WEB (la que vamos a usar), nunca vamos a hacer que la vista interactue directamente con el modelo. En algunos otros MVC clasicos si interactua.
-
-![image](assets/arq3.png)
-
-
-<BR>
-<BR>
-<BR>
-<BR>
+4. <b> INTERFACE SEGREGATION PRINCIPLE: </b>
+    - disenio orientado a interfaces
+    - un objeto necesita conocer del otro lo minimo
+    - Los clientes de un componente(objeto, etc) solo deberian conocer de este aquellos metodos que realmente usan y no aquellos que no necesitan usar
+    - Muchas interfaces cliente especificas son mejores que una interfaz de proposito general
+    - Se deberia propiciar un disenio orientado a interfaces, para mantener el acoplamiento entre clases al minimo posible, y tambien evitar generar interfaces extensas (con muchos metodos)
+    - me conviene si quiero agregar nuevas funcionalidades a un objeto, no tener que modificar la interfaz, sino que solo agregar una nueva interfaz que herede de la anterior y que tenga los metodos nuevos , o que sean dos interfaces separadas pero que el objeto implemente ambas.
+   
+5. <b> DEPENDENCY INVERSION PRINCIPLE:</b>
+    - Los modulos de alto nivel no deben depender de modulos de bajo nivel. Ambos deben depender de abstracciones.
+    - Es una forma de desacoplar modulos.
+    - Se sugiere utilizar inyectores de dependencias.
+    - las abstracciones mas generales no deberian depender de las mas especificas, sino alrevez (?)
+    - es el caso que se da al tener una capa Repository, la cual me permite no depender de que tecnologia de DB uso (mysql, mongoDB, etc), sino que solo me importa que sea una DB, la capa repository funcionaria igual con cualquier DB.Mi controller llamara a mi repository y funcionaria todo igual.
+l
 
 
 
+# REFACTORING:
+
+- NO es incorporar funcionalidades nuevas
+- NO es optimizar codigo
+- ES cambiar la estructura del codigo para hacerlo mas simple y extensible.
+    - cambiar nombre de clase,metodo,etc
+    - reemplazar condicionales por objetos polimorficos
+    - separar clase en varias
+
+El refactor busca:
+1. metodos cortos y nombres definidos
+2. metodos y clases con responsabilidades claras
+3. respecto a las variables de instancia: hay que evaluar costo-beneficio de tener en variables valores que pueden calcularse, como el total de deuda de un cliente, o cant de hijos de un empleado. 
+    - motivo: desnormalizacion de datos: dato que puedo calcular, pero decido guardarlo por algun proposito. Ej: si es muy consultado el dato, en vez de tener el calculado en forma de un count de una collecion(calcula siempre), es mejor tenerlo como un contador o acumulador.
+4. No tener GOD objects ni managers. Objetos que roban responsabilidades que les corresponden a otros objetos.
+5. Preferible Objetos chicos, a grandes con muchas responsabilidades.
+6. Evitar ciclos de dependencia entre objetos si no los necesito. Intentar evitar relaciones bidireccionales innecesarias. EJ: Cada cliente conoce a sus facturas, la factura necesita conocer al cliente?.
+
+# CODE SMELLS:
+
+![image](assets/codesmell1.png)
+![image](assets/codesmell2.png)
+![image](assets/codesmell3.png)
 
 
-## TP:
-- revisar el modelo en capas
+- Hacer las cosas una sola vez
+- Dont repeat yourself (DRY)
+- Dos de las formas mas conocidas para evitar este smell en disenio es la composicion y herencia.
+
+- Se podria seguir refactorizando, aplicando template method ya que hacen lo mismo los dos hasta en el mismo orden.
+
+
+
+## <u> METODOS LARGOS: </u>
+
+El metodo largo podemos descomponerlo en varias partes.
+En realidad serian metodos poco cohesivos, ya que habria que identificar aquellos metodos que se pueden separar en otros metodos, y que tengan una responsabilidad clara.
+El viejo metodo largo, quedara como un metodo orquestador que llama a los demas metodos.
+
+## <u> GOD CLASS: </u>
+
+- Clases con demasiadas responsabilidades, que estan fuertemente acopladas a muchos otros objetos y que por consecuencia ante cualquier cambio se ven afectadas
+- NUNCA hacer una clase que se llame (mas bien represente al) SISTEMA xd
+- SOLUCIONES A GOD CLASS:
+    ![image](assets/Solucionesagodclass.png)
+    1. Generar nuevas clases: Principio de responsabilidad unica (S de SOLID):
+    2. Generar subclases: Principio de Liskov. Que no se intente cambiar el tipo generico (GODCLASS) que antes estaba usando. A cada clase hija la debo tratar como la mas general.
+    3. Generar interfaces: Segregacion de interfaces
+
+
+Si la god class es respponsable de una interfaz grafica, se debe comenzxar a pensar en el patron MVC, e ir descomponiendo a las responsabilidades entre las diferentes capas involucradas
+
+## <u> PARAMETROS LARGOS: </u>
+
+- Puede darse cuando varios algoritmos se combinan en un metodo <?>
+
+- Si un objeto va a brindar un servicio a otro, lo mejor seria que la cantidad de parametros del metodo en cuestion no varie
+
+EJ:
+    ![image](assets/paramlargo1.png)
+
+Ahora se creo un objeto de tipo BusquedaPelicula. Todos esos parametros pasaron a estar dentro de busqueda pelicula.
+
+        BusquedaPelicula()
+            - nombre
+            - autor
+            - estrellas
+            - ...
+            - DIRECTOR (nueva) -> la agrego sin romper los parametros
+
+## <u> CADENA DE MSJS: </u>
+
+Si un objeto envia un msj de la forma
+
+        a.b().c().d();
+
+Va en contra del consejo `tell, dont ask` o, `dont talk to strangers`, donde un objeto deberia (deeeberia, no hace falta cumplirlo SI O SI) enviar mensajes:
+- a si mismo
+- a objetos que conoce (como variables de instancia)
+- a objetos que recibe como parametro
+- a objetos que instancia
+
+`A VECES` se hace adrede para no generar un stackoverflow con la pila de mensajes
+
+no es un code smell tan importante.
+
+## <u> HERENCIA RECHAZADA: </u>
+
+Se puede dar cuando una clase sobreescribe completamente un metodo base definido por su padre sin importarle lo que este le haya dicho que tenia que hacer, o cuando una clase hereda metodos que en realidad no deberia tener.
+
+La herencia es rigida:
+- Obliga a definir mas metodos que los necesarios(en ciertos casos)
+- En la mayoria de los lenguajes la herencia es simple lo que la transforma en limitante
+
+posible solucion: si no son lo mismo par que forzarlo? usar COMPOSICION (interfaz y distintas clases para tratarlas polimorficamente O armar la herencia bien hecha, osea esa herencia rechazada separarla en varias herencias mas)  POR SOBRE HERENCIA
+
+## <u> LAZY CLASS: </u>
+
+- Caso de extrema delegacion o porque el componente fue creado 'por las dudas'
+- Para evitarlo:
+    - No agregar funcionalidad hasta que sea necesario. YAGNI('no lo necesitas')
+    - Eliminar de nuestro disenio las clases que no hagan nada, si necesito algo asi a lo sumo tengo el mockeo.
+
+## <u> NOMBRES DE VARIABLES CORTOS O ILEGIBLES: </u>
+
+Los nombres:
+- Deben tener expresividad
+- Deben representar su funcionalidad
+
+## <u> Nombre de metodo muy largo: </u>
+
+Si nos esta costando elegir un nombre bien representativo para el metodo y nos queda muy largo, seguramente hay mas de una logica comprendida dentro del mismo.
+
+## <u> CODIGO MUERTO: </u>
+
+- Codigo 'por las dudas' ->  se borra
+- Comentarios tambien considerados
+
+## <u> PRIMITIVE OBSSESION: </u>
+
+Suele darse al representar con ints, booleans o Strings o enums cosas que podrian ser objetos con comportamiento. Las enums nos llevan a tener sentencias condicionales en lugar de trabajar con objetos polimorficos.
+ej:
+```
+public enum Estacion { VERANO, PRIMAVERA, OTOÑO, INVIERNO }
+public void actuar() {
+    switch (estacion) {
+        case VERANO:
+            // hacer algo
+            break;
+        case PRIMAVERA:
+            // hacer algo
+            break;
+        case OTOÑO:
+            // hacer algo
+            break;
+        case INVIERNO:
+            // hacer algo
+            break;
+    }
+    
+    mismo ejemplo con ifs estaria mal igual
+```
+
+SOLUCION: Buscar abstracciones que nos permitan trabajar polimorficamente
+De todas formas tengo que evaluar, tal vez el ENUM si sea la solucion a mi problema, debo evaluar que tanta frecuencia al cambio tengo, si habra mas casos de estaciones, si tengo comportamiento un ENUM no va, etc.
+
+Si lo modelo como clases en vez de enum tambien tengo la posibilidad de crear nuevas INSTANCIAS (instancia = new clase(), (no clase) en momento de ejecucion, en cambio con el enum no.
+
+## <u> DATA CLASS - ONLY ACCESORS: </u>
+
+Una clase que solo representa datos es reconocible porque solo presenta setters y getters.
+
+es mala practica pensar que es bueno separar un objeto en atributos y comportamiento.Esto rompe con el POO.
+donde un objeto agrupa comportamiento y atributos.
+
+OJO: existen excepciones y son los value objects y los objetos que modelan los parametros que enviamos a un objeto .
+no confundir con los Value Objects, que son objetos que representan datos, pero que no tienen comportamiento.
+
+una clase separada en DOS innecesariamente (esta mal): 
+
+        Alumno
+            - datos: DataAlumno
+        metodo1(){
+
+        }
+
+        Data Alumno
+            - edad
+            - materias
+
+
+## <u> METODOS FUERA DE LUGAR E INTERMEDIARIO: </u>
+
+![image](assets/metodosintermediarios.png)
+
+
+Si no accedemos a nigun atributo ni tampoco utilizamos comportamiento interno, posiblemente estamos ubicando mal el metodo. Por q no enviar directamente el msj
+
+<br>
+<br>
+<br>
+<br>
+
+# ENTITIY VS VALUE OBJECT:
+
+Tanto las entidades como los value objects representan abstracciones para el dominio.
+
+DIFERENCIA: Las ENTIDADES son generalmente, abstracciones principales (CORE) y/o relevantes para el dominio con sentido de existencia propio (o anidadas a otras entidades), mientras que los VALUE OBJECTS generalmente representan abstracciones accesorias que solamente guardan datos.
+
+ejemplos:
+- En tendencias musicales: la clase Artista era una ENTIDAD core
+- tenemos una clase Alumno con atributo 'telefono', el cual podria estar siendo representando con una instancia de la clase 'telefono'. Esta clase podria tener como atributos el numero, codigo de area, etcetcetc.
+
+        Class busquedaPelicula()
+            - nombre
+            - autor
+            - estrellas
+            - ...
+            - DIRECTOR (nueva) -> la agrego sin romper los parametros
+       o
+        Class Email()
+            - String direccion
+            public Email (String direccion){
+                  if (direccion.length() < 5) throw new Exception("Direccion invalida");
+                  else this.direccion = direccion;
+              }
+en mi contexto, estos objetos no son CORE, no tienen sentido de existencia propio, son accesorios, son VALUE OBJECTS.
+
+<b>TIPOS DE IGUALDAD: </b>
+
+![image](assets/entityvsvalueobjectTiposDeIgualdad.png)
+
+Las entidades tienen identificadores, mientras que los value objects no.
+
+<b>VIDA:</b>
+- Los VALUE OBJECTS No tienen algo que los identifique de forma univoca, las ENTIDADES SI.
+- Las ENTIDADES viven 'A largo plazo', pueden tener historial, tienen sentido de existencia propio.
+- Los VALUE OBJECTS son desechables, vida util 'muy corta'. No tienen sentido de existencia propia.
+
+<b>INMUTABILIDAD:</b>
+ 
+- ENTIDADES: Generalmente, son `mutables`, es decir que sus atributos pueden cambiar sus valores a lo largo del tiempo.
+
+- V.O: Son `inmutables`. Los atributos NO pueden cambiar de valores. Si se necesita cambiar el valor de algun atributo, se DESECHA la instancia y se crea un VO nuevo.
+
+En JAVA, para darle INMUTABILIDAD a un objeto se usa la palabra 'final'
+<br>
+<br>
+<br>
+### <u><b> ENTIDAD O VALUE OBJECT? </b> </u>
+
+![image](assets/entidadOvalueobject.png)
+
+![image](assets/entidadOvalueobject2.png)
+
+
+
+<br>
+<br>
+<br>
+
+# MODELADO DE USUARIOS, ROLES Y PERMISOS PT.1
+
+## RESPONSABILIDADES DE CAPAS DE UN SISTEMA:
+
+Muchas veces el POO nos lleva a confundir asignacion de responsabilidades entre las distintas capas que puede tener un Sistema.
+
+EJEMPLO Q ESTA MAL: 
+si en el enunciado leo: "permitir a los miembros unirse a la comunidad" esta mal si hago dentro de la clase Miembro el METODO unirse_a_comunidad() ponerlo en una clase
+o
+METODO administrar_etc() en la clase admin.
+
+![image](assets/responsabilidadesCapas.png)
+
+- SERIA INCORRECTO PLANTEAR:
+    - una clase ALUMNO con un metodo 'verCalificaciones': Que haria ese metodo?
+    - una clase DOCENTE con un metodo 'administrarCalifiaciones', nuevamente, que haria ese metodo? 
+    NADA. PENSAMIENTO INCORRECTO
+
+    La discusion no pasa por entender de que solamente los docentes pueden administrar las notas, sino por la abstraccion de capas. Pasa por estar mezclando responsabilidades de distintas capas del sistema. ULTIMO CODE SMELL. Also, estaria creando una god class.
+
+<br>
+<br>
+
+- QUE ES LO CORRECTO?
+
+![image](assets/capas.png)
+
+- CAPA DE PRESENTACION: 
+    - Capa encargada de presentar datos al user, con la cual interactuara.
+    - No necesariamente es visual.
+    - La forma de presentacion de datos la podemos dividir de 2 formas:
+        - Presentacion de datos mediante interfaz grafica(desktop,web,movil)
+        - Presentacion mediante APIs(API REST)
+
+- CAPA DE DOMINIO/NEGOCIO:
+    - Es la capa encargada de modelar las reglas de negocio, las `ENTIDADES` del dominio. ES LA QUE ESTAMOS REALIZANDO EN EL TP AHORA. 
+    - Contiene la parte estructural. 
+
+- CAPA DE DATOS:
+    - Capa encargada de la manipulacion de la persistencia de datos del sistema.
+    - preguntas como donde obtengo a los alumnos del sistema? donde recupero los docentes del sistema? corresponden a esta capa.
+    - Si existe persistencia en una BD, esta capa se encargara de comunicar con ella.
+
+
+![image](assets/responsabilidadesCapas2.png)
+
+- como permitimos que un docente genere(instancie) una calificacion entonces? y si un admin de la plataforma o bedel tambien puede administrar las calificaciones?
+
+- Me interesa la entidad Administrador, bedel y docente? El DOCENTE si porque me interesas mas datos de el y tendra cierto comportamiento, las otras NO, solo tendran acceso al sistema y listo. Entonces si seria al pedo crear una clase BEDEL o ADMIN, solamente son ROLES.
+
+ENTONCES:
+
+![image](assets/responsabilidadesCapas3.png)
+![image](assets/responsabilidadesCapas4.png)
+![image](assets/responsabilidadesCapas5.png)
+
+Este ultimo es un diagrama de objetos, donde tengo 4 instancias distintas de la clase Rol, y 2 de la clase Permiso. En mi sistema solo tendre 1 instancia por Rol, no tiene sentido que tenga un monton por cada usuario. Sino que dos usuarios que tengan el Rol Administrador por ejemplo, apuntaran a la misma instancia administrador: Rol.
+
+No es la unica propuesta de disenio para los usuarios, roles y permisos
+
+- los permisos podrian estar modelados con enums, entendiendo que trae ciertas limitaciones...
+- Los usuarios podrian tener multiples roles (collecion de roles)
+
+![image](assets/responsabilidadesCapas6.png)
+
+Para el BEDEL o el ADMINISTRADOR, NO VOY a crear una clase por ellos dos, porque simplemente son un ROL, que no van a tener comportamiento.
+
+en el tp: entidad miembro SI me interesa, entidad ADMIN de la plataforma NO interesa, solamente tiene un rol, asique no es una entidad.
+
+Donde podriamos instanciar nuestros objetos, donde los podriamos configurar o verificar las acciones? `CAPA DE CONTROLADORES`
+
+
+### <b> CAPA DE CONTROLADORES: </b>
+SON LOS UNICOS QUE DEBERIAN COMUNICARSE CON LAS DEMAS CAPAS. OSEA, YO NUNCA, desde la clase alumno, clase docente, o la que sea de mi dominio acceder a un repositorio o acceder a calificacionesController, o alguna otra parecida.
+
+![image](assets/responsabilidadesCapas7.png)
+![image](assets/responsabilidadesCapas8.png)
+- DataCalificacion es un Value Object, usuario es el usuario que esta intentando crear la calificacion.
+- Aca NO estoy haciendo algo como Docente.CrearCalificacion() porque ahi tendria un problema ya que el Bedel y el Administrador tambien podrian crear calificaciones. Entonces el encargado de crear y validar el permiso es la CalificacionController.
+![image](assets/responsabilidadesCapas9.png)
+
+Lo ideal es tener UN CONTROLADOR por cada clase o entidad. sino seria un controlador God class.
+
+<br>
+<br>
+
+# <b> BIBLIOTECA VS FRAMEWORK: </b>
+
+BIBLIOTECAS:
+- bibliotecas que contienen funcionalidades que el dev puede optar por usarlas o no. Uso una biblioteca que resuelve un problema. Se compila y carga todo el codigo de un tercero o no.
+
+- el flujo lo tengo yo, esto no pasa en los frameworks
+
+FRAMEWORKS:
+- me otorga funcionalidades, pero ya es una estructura, ya me da un marco de trabajo. Suelen ser ellos el flujo de ejecucion del programa e invertir el control.
+- el framework llama a nuestro codigo en cambio a la biblioteca nosotros la llamamos.
+- se dividen en:
+    - DOGMATICOS -estructura rigida y definida, con una "manera correcta".- (SpringBoot, Django, Laravel)
+    - NO DOGMATICOS -menos restrictivo, estructura mas flexible- (ExpressJS)
+
+![image](assets/bibliotecaVsFramework.png)
+
+# <b> INYECCION DE DEPENDENCIA: </b>
+
+![image](assets/inyeccion.png)
+ANALIZANDO LAS 3 POSIBLIDADES
+1. SINGLETON:
+![image](assets/inyeccion2.png)
+DETALLE: lo unico que le falta es que el constructor sea privado para que sea solo la misma clase la que lo puede instanciar
+
+2. SERVICE LOCATOR
+![image](assets/inyeccion3.png)
+
+3. INYECCION DE DEPENDENCIA
+No le pide a NADIE(a ninguna clase) el objeto. Me llega por alguien que no me importa quien.
+![image](assets/inyeccion5.png)
+
+RESUMEN DE DIFERENCIAS:
+![image](assets/inyeccion4.png)
+
+
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+# TP:
+
+- Si hicimos clase USUARIO, o MIEMBRO, es tendencia a ser clase DIOS. Estara fuertemente acoplada al resto de las clases.
+
+- EN CASOS DE USO NUNCA PONER LA PALABRA USUARIO, identificar ROLES mejor. Verbos en infinitivo.
+
+- en el tp: entidad miembro SI me interesa, entidad ADMIN de la plataforma NO interesa, solamente tiene un rol, asique no es una entidad.
+
+- Por ahora, los usuarios entonces ni se graficarian en el modelo, porque son ROLES hasta ahora, NO tienen ninguna relevancia en el dominio. SI tendra importancia en los CASOS DE USO y ahi se se va a graficar como interactua.
+
+
+<!-- to research:
+- polimorfismo -->
+
+## OFF THE RECORD
+- Se puede INSTANCIAR OBJETOS en tiempo de ejecucion. NO confundir con crear clases ni codigo nuevo. Este instanciamiento no nos permiten los ENUMS a diferencia de los objetos, en caso de que quiera permitir algo extensible.
